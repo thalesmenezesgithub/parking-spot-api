@@ -50,8 +50,9 @@ public class ParkingSpotService
         return parkingSpotRepository.findById(id);
     }
 
+    @Transactional
     public void delete(ParkingSpotModel parkingSpotModel)
     {
-        parkingSpotRepository.findById(id);
+        parkingSpotRepository.delete(parkingSpotModel);
     }
 }

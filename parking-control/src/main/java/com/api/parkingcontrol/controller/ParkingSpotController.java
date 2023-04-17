@@ -78,8 +78,9 @@ public class ParkingSpotController
         {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Vaga do estacionamento não encontrado.");
         }
+
         parkingSpotService.delete(parkingSpotModelOptional.get());
 
-        return ResponseEntity.status(HttpStatus.OK).body("L.");
+        return ResponseEntity.status(HttpStatus.OK).body("Vaga de estacionamento deletado com sucesso!");
     }
 }
