@@ -4,6 +4,10 @@ import com.api.parkingcontrol.dto.ParkingSpotDTO;
 import com.api.parkingcontrol.models.ParkingSpotModel;
 import com.api.parkingcontrol.services.ParkingSpotService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +31,10 @@ public class ParkingSpotController
         this.parkingSpotService = parkingSpotService;
     }
 
+    /*
+     *   Save
+     *   @parkingSpotDTO
+     */
     @PostMapping
     public ResponseEntity<Object> saveParkingSpot(@RequestBody @Valid ParkingSpotDTO parkingSpotDTO)
     {
@@ -50,10 +58,14 @@ public class ParkingSpotController
         return ResponseEntity.status(HttpStatus.CREATED).body(parkingSpotService.save(parkingSpotModel)); //Fazer
     }
 
+    /*
+     * Lista todas as vagas de garagem cadastrada
+     * Paginação de 10 ordenação ASC
+     */
     @GetMapping
-    public ResponseEntity<List<ParkingSpotModel>> getAllParkingSpots()
+    public ResponseEntity<Page<ParkingSpotModel>> getAllParkingSpots(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable)
     {
-        return ResponseEntity.status(HttpStatus.OK).body(parkingSpotService.findAll());
+        return ResponseEntity.status(HttpStatus.OK).body(parkingSpotService.findAll(pageable));
     }
 
     @GetMapping("/{id}")
